@@ -1,0 +1,39 @@
+@model List<QuanLyThuVien.Models.ChiTietMuonTra>
+@{
+   Layout = "~/Views/Shared/_LayoutMainAdmin.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/chitietphieumuon.css">
+
+<h2>Chi tiết phiếu mượn</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Mã tài liệu</th>
+            <th>Tên tài liệu</th>
+            <th>Số lượng mượn</th>
+            <th>Tình trạng sách mượn</th>
+            <th>Số lượng trả</th>
+            <th>Tình trạng trả</th>
+            <th>Phí phạt</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ct in Model)
+        {
+            <tr>
+                <td>@ct.MaTaiLieu</td>
+                <td>@(ct.TaiLieu != null ? ct.TaiLieu.TenTaiLieu : "Không có dữ liệu")</td>
+                <td>@ct.SoluongMuon</td>
+                <td>@ct.TinhTrangSachMuon</td>
+                <td>@(ct.SoLuongTra.HasValue? ct.SoLuongTra.Value : 0)</td>
+                <td>@(string.IsNullOrEmpty(ct.TinhTrangTra) ? "Chưa có dữ liệu" : ct.TinhTrangTra)</td>
+                <td>@(ct.PhiPhat.HasValue ? string.Format("{0:N0} VND", ct.PhiPhat.Value) : "Chưa có dữ liệu")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Nút quay lại -->
+<a href="@Url.Action("Index", "MuonTra")" class="btn btn-secondary">Quay lại</a>

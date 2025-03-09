@@ -1,0 +1,45 @@
+@{
+    Layout = "~/Views/Shared/_LayoutMainAdmin.cshtml";
+}
+<form method="post" action="@Url.Action("XacNhanTraSach", "MuonTra")">
+    <input type="hidden" name="maMuonTra" value="@ViewBag.MaMuonTra" />
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Tài liệu</th>
+                <th>Số lượng mượn</th>
+                <th>Số lượng trả</th>
+                <th>Tình trạng trả</th>
+                <th>Phí phạt</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>@Model[i].TaiLieu.TenTaiLieu</td>
+                    <td>@Model[i].SoluongMuon</td>
+                    <td>
+                        <input type="hidden" name="danhSachTra[@i].MaChiTiet" value="@Model[i].MaChiTiet" />
+                        <input type="number" name="danhSachTra[@i].SoLuongTra" class="form-control" min="0"
+                            max="@Model[i].SoluongMuon" required />
+                    <td>
+                        <select name="danhSachTra[@i].TinhTrangTra" class="form-control" required>
+                            <option value="Tốt">Tốt</option>
+                            <option value="Hư hỏng">Hư hỏng</option>
+                            <option value="Mất">Mất</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <input type="number" name="danhSachTra[@i].PhiPhat" class="form-control" step="0.01" min="0"
+                            required />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-success">Xác nhận trả sách</button>
+</form>

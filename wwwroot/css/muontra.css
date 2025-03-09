@@ -1,0 +1,62 @@
+/* Bo tròn bảng */
+#muonTraTable {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Hiệu ứng hover cho hàng trong bảng */
+#muonTraTable tbody tr:hover {
+    background-color: #f5f5f5;
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Hiệu ứng nút */
+.btn {
+    transition: all 0.2s ease-in-out;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* Modal hiển thị mềm mại hơn */
+.modal.fade .modal-dialog {
+    transform: translateY(-10px);
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.modal.show .modal-dialog {
+    transform: translateY(0);
+}
+
+/* Nút đóng modal mượt hơn */
+.btn-close {
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-close:hover {
+    transform: rotate(90deg);
+}
+
+/* Hiệu ứng badge tình trạng */
+.badge {
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 8px;
+}
+
+/* Điều chỉnh DataTable */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    transition: background-color 0.3s ease-in-out, transform 0.2s;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: #007bff;
+    color: white !important;
+    transform: scale(1.1);
+}
+/* Căn chỉnh ô tìm kiếm */
+.dataTables_wrapper .dataTables_filter {
+    margin-bottom: 10px; /* Tạo khoảng cách dưới */
+}

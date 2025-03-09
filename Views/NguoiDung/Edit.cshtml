@@ -1,0 +1,83 @@
+﻿@model QuanLyThuVien.Models.NguoiDung
+
+@{
+    ViewBag.Title = "Chỉnh sửa người dùng";
+}
+@{
+    Layout = "~/Views/Shared/_LayoutMainAdmin.cshtml";
+}
+@if (ViewData.ModelState.Any(m => m.Value.Errors.Any()))
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.SelectMany(m => m.Value.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
+
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Chỉnh sửa người dùng</h2>
+    <form asp-action="Edit" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="MaNguoiDung" />
+        <div class="mb-3">
+            <label asp-for="HoTen" class="form-label">Họ và Tên</label>
+            <input asp-for="HoTen" class="form-control" required />
+            <span asp-validation-for="HoTen" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="SDT" class="form-label">Số điện thoại</label>
+            <input asp-for="SDT" class="form-control" />
+            <span asp-validation-for="SDT" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="MatKhau" class="form-label">Mật khẩu</label>
+            <div class="input-group">
+                <input class="form-control" type="password" id="passwordInput" name="MatKhau" value="@Model.MatKhau" />
+                <button type="button" class="btn btn-outline-secondary" onclick="togglePassword()">
+                    <i id="eyeIcon" class="fa fa-eye"></i>
+                </button>
+            </div>
+            <span asp-validation-for="MatKhau" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label">Email</label>
+            <input asp-for="Email" class="form-control" type="email" required />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="LoaiNguoiDung" class="form-label">Loại người dùng</label>
+            <select asp-for="LoaiNguoiDung" class="form-control" required>
+                <option value="">-- Chọn loại người dùng --</option>
+                <option value="Quản trị viên">Quản trị viên</option>
+                <option value="Thủ thư">Thủ thư</option>
+                <option value="Độc giả">Độc giả</option>
+            </select>
+            <span asp-validation-for="LoaiNguoiDung" class="text-danger"></span>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+<script>
+    function togglePassword() {
+        var passwordInput = document.getElementById("passwordInput");
+        var eyeIcon = document.getElementById("eyeIcon");
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            eyeIcon.className = "fa fa-eye-slash";
+        } else {
+            passwordInput.type = "password";
+            eyeIcon.className = "fa fa-eye";
+        }
+    }
+</script>

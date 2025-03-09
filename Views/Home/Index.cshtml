@@ -1,0 +1,266 @@
+﻿@{
+    ViewData["Title"] = "Thư viện Trường Đại Học Mở Hà Nội";
+    var taiLieuList = ViewBag.TaiLieuList as List<QuanLyThuVien.Models.TaiLieu> ?? new List<QuanLyThuVien.Models.TaiLieu>();
+    var theLoaiList = ViewBag.TheLoaiList as List<string> ?? new List<string>();
+    var tongSoTaiLieu = ViewBag.TongSoTaiLieu as int? ?? 0;
+    var taiLieuSanSangChoMuon = ViewBag.TaiLieuSanSangChoMuon as int? ?? 0;
+}
+<style>
+    /* Toàn bộ container */
+    .container {
+        font-family: Arial, sans-serif;
+    }
+
+    /* Tiêu đề chính */
+    h1 {
+        font-size: 28px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    /* Sidebar */
+    .col-md-3 {
+        background-color: #f9f9f9;
+        border-right: 1px solid #ddd;
+        padding: 15px;
+    }
+
+    .col-md-3 h4 {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: #0056b3;
+    }
+
+    .list-group-item {
+        border: none;
+        padding: 8px 10px;
+        margin-bottom: 5px;
+    }
+
+    .list-group-item a {
+        color: #007bff;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .list-group-item a:hover {
+        text-decoration: underline;
+    }
+
+    /* Thông báo */
+    .bg-light {
+        background-color: #fff !important;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 15px;
+    }
+
+    .bg-light h5 {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    /* Nội dung chính */
+    .col-md-9 {
+        padding: 15px;
+    }
+
+    .col-md-9 h4 {
+        font-size: 20px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    /* Thống kê nhanh */
+    .p-3 {
+        background-color: #f1f1f1;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    .p-3 h5 {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .p-3 p {
+        font-size: 18px;
+        color: #007bff;
+        font-weight: bold;
+    }
+
+    /* Danh sách tin tức */
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    ul li {
+        font-size: 14px;
+        margin-bottom: 10px;
+        line-height: 1.6;
+    }
+
+    footer {
+        text-align: center;
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #f1f1f1;
+        font-size: 14px;
+        color: #666;
+        border-top: 1px solid #ddd;
+    }
+
+    .news-section {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+    /* Hộp nội dung tin tức */
+    .news-section .news-box {
+        flex: 1;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Tiêu đề các hộp */
+    .news-section .news-box h5 {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #0056b3;
+    }
+
+    /* Danh sách nội dung tin tức */
+    .news-section .news-box ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .news-section .news-box ul li {
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 10px;
+    }
+
+    .news-section .news-box ul li::before {
+        content: "• ";
+        color: #007bff;
+        font-weight: bold;
+    }
+</style>
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Thư Viện - Trường Đại Học Mở Hà Nội</h1>
+
+    <div class="row">
+        <!-- Sidebar Danh mục thể loại -->
+        <div class="col-md-3">
+            <h4>Danh Mục Thể Loại</h4>
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a href="@Url.Action("Index", "TaiLieu")" class="text-decoration-none">Tất cả</a>
+                </li>
+                @if (theLoaiList.Any())
+                {
+                    foreach (var theLoai in theLoaiList)
+                    {
+                        <li class="list-group-item">
+                            <a href="@Url.Action("Index", "TaiLieu", new { theLoai = theLoai })"
+                                class="text-decoration-none">@theLoai</a>
+                        </li>
+                    }
+                }
+            </ul>
+
+            <!-- Thông báo -->
+            <div class="mt-4 p-3 bg-light border">
+                <h5>Thông báo:</h5>
+                <p>Bạn có 2 tài liệu cần trả trước ngày 28/02/2025.</p>
+                <p>Tài liệu mới đã được thêm vào hệ thống.</p>
+            </div>
+        </div>
+
+        <!-- Nội dung chính -->
+        <div class="col-md-9">
+            <!-- Danh sách tài liệu -->
+            <h4>Danh Sách Tài Liệu</h4>
+            <div class="row">
+                @if (taiLieuList.Any())
+                {
+                    foreach (var taiLieu in taiLieuList)
+                    {
+                        <div class="col-md-4">
+                            <div class="card mb-4">
+                                <img src="@taiLieu.img" alt="@taiLieu.TenTaiLieu" class="card-img-top"
+                                    style="max-height: 200px; object-fit: cover;">
+                                <div class="card-body">
+                                    <h5 class="card-title">@taiLieu.TenTaiLieu</h5>
+                                    <p class="card-text">
+                                        <strong>Tác giả:</strong> @taiLieu.TenTacGia <br />
+                                        <strong>Thể loại:</strong> @taiLieu.TheLoai
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>Không có tài liệu nào để hiển thị.</p>
+                }
+            </div>
+
+            <!-- Thống kê nhanh -->
+            <h4 class="mt-4">Thống Kê Nhanh</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="p-3 bg-light border">
+                        <h5>Tổng số tài liệu hiện có:</h5>
+                        <p>@tongSoTaiLieu</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-3 bg-light border">
+                        <h5>Tài liệu sẵn sàng cho mượn:</h5>
+                        <p>@taiLieuSanSangChoMuon</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="news-section">
+                <!-- Tin tức và sự kiện -->
+                <div class="news-box">
+                    <h5>Tin tức và Sự Kiện</h5>
+                    <ul>
+                        <li>Trường Đại học Mở Hà Nội tổ chức chương trình tuyển sinh mới nhất năm.</li>
+                        <li>Học trực tuyến tại Đại học Mở Hà Nội - Xu hướng giáo dục thời đại.</li>
+                        <li>Sinh viên Đại học Mở Hà Nội đạt giải cao trong cuộc thi quốc gia.</li>
+                    </ul>
+                </div>
+
+                <!-- Tin thư viện -->
+                <div class="news-box">
+                    <h5>Tin Thư Viện</h5>
+                    <ul>
+                        <li>Thư viện Đại học Mở Hà Nội mở rộng giờ phục vụ sinh viên.</li>
+                        <li>Bổ sung hàng loạt tài liệu mới về trí tuệ nhân tạo và khoa học dữ liệu.</li>
+                        <li>Nhiều sự kiện sách hấp dẫn sẽ diễn ra trong tháng này.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

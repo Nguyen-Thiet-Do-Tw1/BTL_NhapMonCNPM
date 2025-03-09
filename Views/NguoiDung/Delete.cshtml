@@ -1,0 +1,22 @@
+﻿@model QuanLyThuVien.Models.NguoiDung
+
+@{
+    ViewBag.Title = "Xóa người dùng";
+}
+@{
+   Layout = "~/Views/Shared/_LayoutMainAdmin.cshtml";
+}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Xóa người dùng</h2>
+    <div class="alert alert-warning">
+        <p>Bạn có chắc chắn muốn xóa người dùng: <strong>@Model.HoTen</strong> không?</p>
+    </div>
+    <form asp-action="Delete" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="MaNguoiDung" />
+        <div class="text-center">
+            <button type="submit" class="btn btn-danger">Xóa</button>
+            <a asp-action="Index" class="btn btn-secondary">Hủy</a>
+        </div>
+    </form>
+</div>

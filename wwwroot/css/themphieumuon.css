@@ -1,0 +1,65 @@
+/* Căn chỉnh form */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Định dạng các nhãn (label) */
+form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+/* Căn chỉnh input và select */
+form .form-control {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+/* Khoảng cách giữa các form-group */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Nút bấm */
+.btn-success, .btn-secondary {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border: none;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+}
+
+/* Hiệu ứng hover */
+.btn-success:hover {
+    background-color: #218838;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Thông báo lỗi */
+.alert-danger {
+    max-width: 600px;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border-radius: 5px;
+    border: 1px solid #f5c6cb;
+}

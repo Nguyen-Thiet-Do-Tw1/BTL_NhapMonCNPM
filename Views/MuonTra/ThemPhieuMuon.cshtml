@@ -1,0 +1,65 @@
+@model MuonTra
+@{
+    Layout = "~/Views/Shared/_LayoutMainAdmin.cshtml";
+}
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
+<link rel="stylesheet" href="~/css/themphieumuon.css">
+
+<h2>Thêm Phiếu Mượn</h2>
+
+<form asp-action="ThemPhieuMuon" method="post">
+
+    <!-- Mã Phiếu Mượn -->
+    <div class="form-group">
+        <label>Mã Phiếu Mượn</label>
+        <input type="text" asp-for="MaMuonTra" class="form-control" readonly />
+    </div>
+
+    <!-- Chọn độc giả -->
+    <div class="form-group">
+        <label for="MaNguoiDung">Chọn độc giả</label>
+        <select asp-for="MaNguoiDung" class="form-control" required>
+            <option value="">-- Chọn độc giả --</option>
+            @foreach (var nguoiDung in ViewBag.DanhSachNguoiDung)
+            {
+                <option value="@nguoiDung.MaNguoiDung">@nguoiDung.HoTen (@nguoiDung.MaNguoiDung)</option>
+            }
+        </select>
+    </div>
+
+    <!-- Ngày mượn -->
+    <div class="form-group">
+        <label>Ngày mượn</label>
+        <input type="date" asp-for="NgayMuon" class="form-control" readonly />
+    </div>
+
+    <!-- Ngày hẹn trả -->
+    <div class="form-group">
+        <label>Ngày hẹn trả</label>
+        <input type="date" asp-for="NgayHenTra" class="form-control" required
+           />
+    </div>
+
+    <!-- Ngày trả thực tế -->
+    <div class="form-group" hidden>
+        <label hidden>Ngày trả thực tế (nếu có)</label>
+        <input type="date" asp-for="NgayTraThucTe" class="form-control" hidden />
+    </div>
+
+    <!-- Tình trạng -->
+    <div class="form-group">
+        <label>Tình trạng</label>
+        <input asp-for="TinhTrang" class="form-control" required readonly>
+    </div>
+
+    <button type="submit" class="btn btn-success">Lưu Phiếu Mượn</button>
+    <a href="@Url.Action("Index", "MuonTra")" class="btn btn-secondary">Quay lại</a>
+</form>

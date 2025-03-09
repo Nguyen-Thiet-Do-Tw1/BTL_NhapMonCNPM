@@ -1,0 +1,316 @@
+﻿@{
+    ViewData["Title"] = "Quản lý tài liệu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    Layout = "~/Views/Shared/_LayoutMainAdmin.cshtml";
+}
+<div class="container mt-4">
+    <h2>Danh sách tài liệu</h2>
+
+    <div class="mb-3">
+        <input type="text" id="searchInput" class="form-control" placeholder="Tìm kiếm theo tên tài liệu...">
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Mã tài liệu</th>
+                <th>Tên tài liệu</th>
+                <th>Ảnh</th>
+                <th>Tác giả</th>
+                <th>Thể loại</th>
+                <th>Năm XB</th>
+                <th>NXB</th>
+                <th>Số lượng</th>
+                <th>Tình trạng</th>
+                <th>Vị trí</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody id="documentTableBody"></tbody>
+    </table>
+
+
+    <button class="btn btn-primary" onclick="showCreateModal()">Thêm tài liệu</button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="documentModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thông tin tài liệu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="docId">
+                <div class="form-group">
+                    <label>Mã tài liệu:</label>
+                    <input type="text" class="form-control" id="docCode">
+                </div>
+                <div class="form-group">
+                    <label>Tên tài liệu:</label>
+                    <input type="text" class="form-control" id="docName">
+                </div>
+                <div class="form-group">
+                    <label>Link ảnh:</label>
+                    <input type="text" class="form-control" id="docImg">
+                </div>
+                <div class="form-group">
+                    <label>Tác giả:</label>
+                    <input type="text" class="form-control" id="docAuthor">
+                </div>
+                <div class="form-group">
+                    <label>Thể loại:</label>
+                    <input type="text" class="form-control" id="docCategory">
+                </div>
+                <div class="form-group">
+                    <label>Năm xuất bản:</label>
+                    <input type="number" class="form-control" id="docYear">
+                </div>
+                <div class="form-group">
+                    <label>Nhà xuất bản:</label>
+                    <input type="text" class="form-control" id="docPublisher">
+                </div>
+                <div class="form-group">
+                    <label>Số lượng:</label>
+                    <input type="number" class="form-control" id="docQuantity">
+                </div>
+                <div class="form-group">
+                    <label>Tình trạng:</label>
+                    <select class="form-control" id="docStatus">
+                        <option value="Có sẵn">Có sẵn</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Vị trí:</label>
+                    <input type="text" class="form-control" id="docLocation">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="btnSaveDoc">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        loadDocuments();
+
+        // Gắn sự kiện cho nút lưu
+        $('#btnSaveDoc').on('click', function () {
+            var maTaiLieu = $('#docCode').val();
+            checkDocumentExists(maTaiLieu);
+        });
+
+        // Gắn sự kiện cho nút đóng
+        $('.modal .close').on('click', function () {
+            $('#documentModal').modal('hide');
+        });
+        $('#searchInput').on('keyup', function () {
+            var keyword = $(this).val().toLowerCase();
+            filterDocuments(keyword);
+        });
+    });
+
+    function filterDocuments(keyword) {
+        $("#documentTableBody tr").each(function () {
+            var docName = $(this).find("td:nth-child(2)").text().toLowerCase();
+            $(this).toggle(docName.includes(keyword));
+        });
+    }
+
+    function loadDocuments() {
+        $.get('/TaiLieu/GetAll', function (data) {
+            var rows = '';
+            $.each(data, function (i, doc) {
+                rows += `<tr>
+                            <td>${doc.maTaiLieu}</td>
+                            <td>${doc.tenTaiLieu}</td>
+                            <td><img src="${doc.img}" alt="Ảnh" style="width: 50px;"></td>
+                            <td>${doc.tenTacGia}</td>
+                            <td>${doc.theLoai || ''}</td>
+                            <td>${doc.namXuatBan}</td>
+                            <td>${doc.nxb}</td>
+                            <td>${doc.soLuong}</td>
+                            <td>${doc.tinhTrang}</td>
+                            <td>${doc.viTri}</td>
+                            <td>
+                                <button onclick="showEditModal('${doc.maTaiLieu}')" class="btn btn-warning btn-sm">Sửa</button>
+                                <button onclick="deleteDocument('${doc.maTaiLieu}')" class="btn btn-danger btn-sm">Xóa</button>
+                            </td>
+                        </tr>`;
+            });
+            $('#documentTableBody').html(rows);
+        });
+    }
+
+    function showCreateModal() {
+        $.get('/TaiLieu/GetNextMaTaiLieu', function (data) {
+            $('#docCode').val(data.nextMaTaiLieu);
+        });
+
+        $('#docName').val('');
+        $('#docImg').val('');
+        $('#docAuthor').val('');
+        $('#docCategory').val('');
+        $('#docYear').val('');
+        $('#docPublisher').val('');
+        $('#docQuantity').val('');
+        $('#docStatus').val('Có sẵn');
+        $('#docLocation').val('');
+
+        $('#documentModal').modal('show');
+    }
+
+
+    function showEditModal(maTaiLieu) {
+        $.get(`/TaiLieu/GetAll`, function (data) {
+            var doc = data.find(c => c.maTaiLieu === maTaiLieu);
+            if (doc) {
+                $('#docId').val(doc.maTaiLieu);
+                $('#docCode').val(doc.maTaiLieu).prop('readonly', true);
+                $('#docName').val(doc.tenTaiLieu);
+                $('#docImg').val(doc.img);
+                $('#docAuthor').val(doc.tenTacGia);
+                $('#docCategory').val(doc.theLoai);
+                $('#docYear').val(doc.namXuatBan);
+                $('#docPublisher').val(doc.nxb);
+                $('#docQuantity').val(doc.soLuong);
+                $('#docStatus').val(doc.tinhTrang);
+                $('#docLocation').val(doc.viTri);
+                $('#documentModal').modal('show');
+            }
+        });
+    }
+
+
+    function checkDocumentExists(maTaiLieu) {
+        $.get('/TaiLieu/GetAll', function (data) {
+            var isExist = data.some(doc => doc.maTaiLieu === maTaiLieu);
+
+            if (isExist) {
+                editDocument(maTaiLieu);
+            } else {
+                saveDocument();
+            }
+        });
+    }
+
+    function editDocument(maTaiLieu) {
+        var doc = {
+            maTaiLieu: maTaiLieu,
+            tenTaiLieu: $('#docName').val(),
+            img: $('#docImg').val(),
+            tenTacGia: $('#docAuthor').val(),
+            theLoai: $('#docCategory').val(),
+            namXuatBan: $('#docYear').val(),
+            nxb: $('#docPublisher').val(),
+            soLuong: $('#docQuantity').val(),
+            tinhTrang: $('#docStatus').val(),
+            viTri: $('#docLocation').val()
+        };
+
+        $.ajax({
+            url: '/TaiLieu/Edit',
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(doc),
+            success: function (res) {
+                if (res.success) {
+                    $('#documentModal').modal('hide');
+                    loadDocuments();
+                    alert("Cập nhật tài liệu thành công!");
+                } else {
+                    alert(res.message);
+                }
+            }
+        });
+    }
+
+    function saveDocument() {
+        var maTaiLieu = $('#docCode').val();
+        var tenTaiLieu = $('#docName').val();
+        var img = $('#docImg').val();
+        var tenTacGia = $('#docAuthor').val();
+        var theLoai = $('#docCategory').val();
+        var namXuatBan = parseInt($('#docYear').val(), 10);
+        var nxb = $('#docPublisher').val();
+        var soLuong = parseInt($('#docQuantity').val(), 10);
+        var tinhTrang = $('#docStatus').val();
+        var viTri = $('#docLocation').val();
+
+        var currentYear = new Date().getFullYear();
+
+        // Kiểm tra thông tin bắt buộc
+        if (!maTaiLieu || !tenTaiLieu || !tenTacGia || !theLoai || !namXuatBan || !nxb || !soLuong || !viTri) {
+            alert("Vui lòng nhập đầy đủ thông tin tài liệu!");
+            return;
+        }
+
+        // Kiểm tra số lượng không được âm
+        if (soLuong < 0) {
+            alert("Số lượng tài liệu không được là số âm!");
+            return;
+        }
+
+        // Kiểm tra năm xuất bản không được âm và nhỏ hơn hoặc bằng năm hiện tại
+        if (namXuatBan <= 0 || namXuatBan > currentYear) {
+            alert("Năm xuất bản phải là số dương và không được lớn hơn năm hiện tại!");
+            return;
+        }
+
+        var doc = {
+            maTaiLieu: maTaiLieu,
+            tenTaiLieu: tenTaiLieu,
+            img: img,
+            tenTacGia: tenTacGia,
+            theLoai: theLoai,
+            namXuatBan: namXuatBan,
+            nxb: nxb,
+            soLuong: soLuong,
+            tinhTrang: tinhTrang,
+            viTri: viTri
+        };
+
+        $.ajax({
+            url: '/TaiLieu/CreateOrUpdate',
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(doc),
+            success: function (res) {
+                if (res.success) {
+                    $('#documentModal').modal('hide');
+                    loadDocuments();
+                    alert("Thêm tài liệu thành công!");
+                } else {
+                    alert(res.message);
+                }
+            }
+        });
+    }
+
+
+    function deleteDocument(maTaiLieu) {
+        if (confirm("Bạn có chắc muốn xóa tài liệu này không?")) {
+            $.post("/TaiLieu/Delete", { maTaiLieu: maTaiLieu }, function (res) {
+                if (res.success) {
+                    alert(res.message);
+                    location.reload();
+                } else {
+                    alert(res.message);
+                }
+            }).fail(function () {
+                alert("Đã xảy ra lỗi trong quá trình xóa tài liệu.");
+            });
+        }
+    }
+
+
+    $('#btnSaveDoc').click(saveDocument);
+</script>

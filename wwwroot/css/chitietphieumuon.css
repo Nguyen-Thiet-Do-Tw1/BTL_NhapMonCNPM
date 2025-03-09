@@ -1,0 +1,58 @@
+/* Căn chỉnh bảng */
+.table {
+    width: 100%;
+    max-width: 1000px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Định dạng header của bảng */
+.table thead {
+    background: #007bff;
+    color: #fff;
+}
+
+.table th, .table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Làm nổi bật hàng khi hover */
+.table tbody tr:hover {
+    background: #f1f1f1;
+}
+
+/* Định dạng các ô có dữ liệu rỗng */
+.table td {
+    color: #333;
+}
+
+.table td:empty::before {
+    content: "Không có dữ liệu";
+    color: #888;
+    font-style: italic;
+}
+
+/* Nút quay lại */
+.btn-secondary {
+    display: block;
+    width: 150px;
+    margin: 20px auto;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+    background-color: #6c757d;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}

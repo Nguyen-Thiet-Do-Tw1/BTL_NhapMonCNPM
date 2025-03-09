@@ -1,0 +1,88 @@
+@{
+    ViewData["Title"] = "Danh Mục Tài Liệu";
+
+    // Ép kiểu dữ liệu từ ViewBag
+    var theLoaiList = ViewBag.TheLoaiList as List<string> ?? new List<string>();
+    var selectedTheLoai = ViewBag.SelectedTheLoai as string ?? string.Empty;
+    var taiLieuList = Model as List<QuanLyThuVien.Models.TaiLieu> ?? new List<QuanLyThuVien.Models.TaiLieu>();
+}
+
+<style>
+    .list-group-item {
+        background-color: white;
+        color: #333;
+        transition: background-color 0.3s ease;
+    }
+
+    .list-group-item:hover {
+        background-color: #f1f1f1;
+        color: #333;
+        text-decoration: none;
+    }
+
+    .list-group-item.active {
+        background-color: #cce5ff;
+        color: #004085;
+        font-weight: bold;
+    }
+
+    .list-group-item.active:hover {
+        background-color: #b8daff;
+        color: #00376d;
+    }
+</style>
+
+<div class="row mt-4">
+    <!-- Sidebar danh sách thể loại -->
+    <div class="col-md-3">
+        <h4>Danh Mục Thể Loại</h4>
+        <ul class="list-group">
+            <li class="list-group-item @(string.IsNullOrEmpty(selectedTheLoai) ? "active" : "")">
+                <a href="@Url.Action("Index", "TaiLieu")" class="text-decoration-none">Tất cả</a>
+            </li>
+            @foreach (var theLoai in theLoaiList)
+            {
+                <li class="list-group-item @(selectedTheLoai == theLoai ? "active" : "")">
+                    <a href="@Url.Action("Index", "TaiLieu", new { theLoai = theLoai })"
+                        class="text-decoration-none">@theLoai</a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <!-- Danh sách tài liệu -->
+    <div class="col-md-9">
+        <h4>Danh Sách Tài Liệu</h4>
+        <div class="row">
+            @if (taiLieuList.Any())
+            {
+                @foreach (var taiLieu in taiLieuList)
+                {
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-body text-center">
+                                <!-- Hiển thị hình ảnh tài liệu -->
+                                <img src="@taiLieu.img" alt="@taiLieu.TenTaiLieu" class="img-fluid mb-3"
+                                    style="max-height: 200px;" />
+                                <h5 class="card-title">@taiLieu.TenTaiLieu</h5>
+                                <p class="card-text">
+                                    <strong>Tác giả:</strong> @taiLieu.TenTacGia <br />
+                                    @* <strong>Thể loại:</strong> @taiLieu.TheLoai <br /> *@
+                                    @* <strong>Năm xuất bản:</strong> @taiLieu.NamXuatBan <br />
+                                    <strong>Nhà xuất bản:</strong> @taiLieu.NXB <br /> *@
+                                    <strong>Số lượng:</strong> @taiLieu.SoLuong <br />
+                                    @* <strong>Tình trạng:</strong> @taiLieu.TinhTrang <br /> *@
+                                    <strong>Vị trí:</strong> @taiLieu.ViTri
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>Không có tài liệu nào thuộc thể loại này.</p>
+            }
+        </div>
+    </div>
+</div>

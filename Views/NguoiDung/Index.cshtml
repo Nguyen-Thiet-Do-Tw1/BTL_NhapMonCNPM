@@ -1,0 +1,113 @@
+﻿@model List<QuanLyThuVien.Models.NguoiDung>
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@{
+    ViewBag.Title = "Quản lý người dùng";
+}
+@{
+   Layout = "~/Views/Shared/_LayoutMainAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Quản lý người dùng</h2>
+    <div class="row mb-3">
+        <!-- Ô search -->
+        <div class="col-md-6">
+            <input type="text" id="searchBox" class="form-control" placeholder="Search..." onkeyup="searchUser()">
+        </div>
+        <!-- Nút Thêm -->
+        <div class="col-md-6 text-end">
+            <a href="@Url.Action("Create", "NguoiDung")" class="btn btn-primary">Thêm</a>
+        </div>
+    </div>
+
+    <!-- Bảng người dùng -->
+    <table class="table table-bordered">
+        <thead class="table-light">
+            <tr>
+                <th>STT</th>
+                <th>Mã người dùng</th>
+                <th>Họ tên</th>
+                <th>SĐT</th>
+                @* <th>Mật khẩu</th> *@
+                <th>Email</th>
+                <th>Xóa</th>
+                <th>Chỉnh sửa</th>
+            </tr>
+        </thead>
+        <tbody id="userTable">
+            @if (Model != null && Model.Count > 0)
+            {
+                int stt = 1;
+                foreach (var user in Model)
+                {
+                    <tr>
+                        <td>@stt</td>
+                        <td>@user.MaNguoiDung</td>
+                        <td>@user.HoTen</td>
+                        <td>@user.SDT</td>
+                        @* <td>@user.MatKhau</td> *@
+                        <td>@user.Email</td>
+                        <td class="text-center">
+                            <a class="btn btn-danger"
+                               href="@Url.Action("Delete", "NguoiDung", new { id = user.MaNguoiDung })">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a class="btn btn-warning"
+                               href="@Url.Action("Edit", "NguoiDung", new { id = user.MaNguoiDung })">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                        </td>
+                        @* <td class="text-center">
+                            <a class="btn btn-success"
+                               href="@Url.Action("Update", "NguoiDung", new { id = user.MaNguoiDung })">
+                                <i class="bi bi-check-square"></i>
+                            </a>
+                        </td> *@
+                    </tr>
+                    stt++;
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="9" class="text-center">Không có dữ liệu</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- JavaScript Tìm kiếm (theo cột Họ tên) -->
+<script>
+    function searchUser() {
+        var input = document.getElementById("searchBox");
+        var filter = input.value.toUpperCase();
+        var table = document.getElementById("userTable");
+        var tr = table.getElementsByTagName("tr");
+
+        for (var i = 0; i < tr.length; i++) {
+            // 2 là chỉ số cột "Họ tên" (0 = STT, 1 = Mã, 2 = Họ tên,...)
+            var td = tr[i].getElementsByTagName("td")[2];
+            if (td) {
+                var txtValue = td.textContent || td.innerText;
+                tr[i].style.display = (txtValue.toUpperCase().indexOf(filter) > -1)
+                    ? "" : "none";
+            }
+        }
+    }
+</script>

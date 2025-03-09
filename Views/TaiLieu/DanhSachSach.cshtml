@@ -1,0 +1,23 @@
+@model List<QuanLyThuVien.Models.TaiLieu> 
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="mb-4">Thể loại: @ViewBag.TheLoai</h2>
+    <ul class="list-group">
+        @foreach (var taiLieu in Model)
+        {
+            <li class="list-group-item">
+                <h5>@taiLieu.TenTaiLieu</h5>
+                <p><b>Tác giả:</b> @taiLieu.TenTacGia</p>
+                <p><b>Năm xuất bản:</b> @taiLieu.NamXuatBan</p>
+                <p><b>Nhà xuất bản:</b> @taiLieu.NXB</p>
+                <p><b>Vị trí:</b> @taiLieu.ViTri</p>
+                <p><b>Tình trạng:</b> @taiLieu.TinhTrang</p>
+            </li>   
+        }
+    </ul>
+    <a href="@Url.Action("Index", "TaiLieu")" class="btn btn-primary mt-3">Quay lại</a>
+</div>
