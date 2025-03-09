@@ -79,6 +79,7 @@ CREATE TABLE tblBaoCaoThongKe (
     iTongSachHuHong INT,
     iSoLuotMuonHomNay INT,
     iSoLuongTraHomNay INT
+	FOREIGN KEY (sMaNguoiLap) REFERENCES tblNguoiDung(sMaNguoiDung)
 );
 
 -- Thêm dữ liệu cho bảng tblTaiLieu
@@ -109,16 +110,16 @@ INSERT INTO tblNguoiDung VALUES
 
 -- Thêm dữ liệu cho bảng tblMuonTra
 INSERT INTO tblMuonTra VALUES
-('MT001', 'ND001', '2024-02-01', '2024-02-15', NULL, N'Đang mượn'),
-('MT002', 'ND002', '2024-01-10', '2024-01-25', '2024-01-24', N'Đã trả'),
-('MT003', 'ND004', '2024-02-05', '2024-02-20', NULL, N'Đang mượn'),
-('MT004', 'ND006', '2024-01-20', '2024-02-05', '2024-02-06', N'Đã trả'),
-('MT005', 'ND008', '2024-01-15', '2024-01-30', '2024-01-31', N'Đã trả'),
-('MT006', 'ND001', '2024-02-10', '2024-02-25', NULL, N'Đang mượn'),
-('MT007', 'ND003', '2024-01-22', '2024-02-07', '2024-02-08', N'Đã trả'),
-('MT008', 'ND007', '2024-01-30', '2024-02-14', NULL, N'Đang mượn'),
-('MT009', 'ND005', '2024-02-12', '2024-02-27', NULL, N'Đang mượn'),
-('MT010', 'ND009', '2024-02-01', '2024-02-16', NULL, N'Đang mượn');
+('MT001', 'ND001', '2025-02-01', '2025-03-15', NULL, N'Đang mượn'),
+('MT002', 'ND002', '2025-01-10', '2025-01-25', '2025-01-25', N'Đã trả'),
+('MT003', 'ND004', '2025-02-05', '2025-03-20', NULL, N'Đang mượn'),
+('MT004', 'ND006', '2025-01-20', '2025-02-05', '2025-02-04', N'Đã trả'),
+('MT005', 'ND008', '2025-01-15', '2025-01-30', '2025-02-02', N'Đã trả'),
+('MT006', 'ND001', '2025-02-10', '2025-02-25', NULL, N'Đang mượn'),
+('MT007', 'ND003', '2025-01-22', '2025-02-07', '2025-02-08', N'Đã trả'),
+('MT008', 'ND007', '2025-01-30', '2025-02-14', NULL, N'Đang mượn'),
+('MT009', 'ND005', '2025-02-12', '2025-02-27', NULL, N'Đang mượn'),
+('MT010', 'ND009', '2025-02-01', '2025-02-16', NULL, N'Đang mượn');
 
 
 INSERT INTO tblChiTietMuonTra VALUES
@@ -130,7 +131,19 @@ INSERT INTO tblChiTietMuonTra VALUES
 ('CT006', 'MT002', 'TL006', 1, N'Mới', 1, N'Tốt', 0),
 ('CT007', 'MT003', 'TL007', 1, N'Cũ', NULL, NULL, NULL),
 ('CT008', 'MT003', 'TL008', 2, N'Mới', NULL, NULL, NULL),
-('CT009', 'MT003', 'TL009', 1, N'Mới', NULL, NULL, NULL);
+('CT009', 'MT004', 'TL009', 1, N'Mới', NULL, NULL, NULL),
+('CT010', 'MT004', 'TL007', 1, N'Cũ', NULL, NULL, NULL),
+('CT011', 'MT005', 'TL008', 2, N'Mới', NULL, NULL, NULL),
+('CT012', 'MT006', 'TL009', 1, N'Mới', NULL, NULL, NULL),
+('CT013', 'MT006', 'TL007', 1, N'Cũ', NULL, NULL, NULL),
+('CT014', 'MT006', 'TL008', 2, N'Mới', NULL, NULL, NULL),
+('CT015', 'MT006', 'TL009', 1, N'Mới', NULL, NULL, NULL),
+('CT016', 'MT007', 'TL007', 1, N'Cũ', NULL, NULL, NULL),
+('CT017', 'MT007', 'TL008', 2, N'Mới', NULL, NULL, NULL),
+('CT018', 'MT008', 'TL009', 1, N'Mới', NULL, NULL, NULL),
+('CT019', 'MT009', 'TL007', 1, N'Cũ', NULL, NULL, NULL),
+('CT020', 'MT010', 'TL008', 2, N'Mới', NULL, NULL, NULL),
+('CT021', 'MT010', 'TL009', 1, N'Mới', NULL, NULL, NULL);
 
 -- Thêm dữ liệu cho bảng tblXuLyViPham
 INSERT INTO tblXuLyViPham VALUES

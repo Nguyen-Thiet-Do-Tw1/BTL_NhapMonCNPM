@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "SqmpzN0r6YhDC3DDAYVj2Gg04959NeN9PHT5tJgd7eC7VphOOkw8vA5BtI3WewhZ/diqaatyfJ6w51RIIT5/xA==",
+  "dgSpecHash": "PFiX4hWpAnlSDm+9pqnO3vX5ZxgYsWU9D8lcGkn2uLB8qlyGGrNKdKOXzCQpuht84lvKJWIAj5iPrtvUtoOm0Q==",
   "success": true,
-  "projectFilePath": "D:\\nmCNPM\\QuanLyThuVien\\QuanLyThuVien.csproj",
+  "projectFilePath": "D:\\BTL_NhapMonCNPM\\QuanLyThuVien\\QuanLyThuVien.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DONPR\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\DONPR\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

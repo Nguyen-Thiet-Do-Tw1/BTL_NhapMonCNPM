@@ -4023,11 +4023,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\nmCNPM\\QuanLyThuVien\\QuanLyThuVien.csproj",
+      "projectUniqueName": "D:\\BTL_NhapMonCNPM\\QuanLyThuVien\\QuanLyThuVien.csproj",
       "projectName": "QuanLyThuVien",
-      "projectPath": "D:\\nmCNPM\\QuanLyThuVien\\QuanLyThuVien.csproj",
+      "projectPath": "D:\\BTL_NhapMonCNPM\\QuanLyThuVien\\QuanLyThuVien.csproj",
       "packagesPath": "C:\\Users\\DONPR\\.nuget\\packages\\",
-      "outputPath": "D:\\nmCNPM\\QuanLyThuVien\\obj\\",
+      "outputPath": "D:\\BTL_NhapMonCNPM\\QuanLyThuVien\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
