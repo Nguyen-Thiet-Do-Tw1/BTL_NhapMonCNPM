@@ -35,7 +35,7 @@ Hướng dẫn cài đặt
    
       Mở file Database/SQLQuery.sql trong SQL Server Management Studio và chạy file
         
-4. Cấu hình chuỗi kết nối SQL Server
+3. Cấu hình chuỗi kết nối SQL Server
 
       Vào SQL Server Management Studio lấy tên Server, tên Database
    
@@ -46,9 +46,13 @@ Hướng dẫn cài đặt
        SERVER_NAME=TIIDII\SQLEXPRESS // thay bằng tên Server của bạn
        DATABASE_NAME=DB_QuanLyThuVien
             
-6. Chạy ứng dụng: mở terminal chạy lệnh
-   
+4. Chạy ứng dụng: mở terminal chạy lệnh
+       cd QuanLyThuVien
        dotnet run
+   
+5. Xem kết quả chạy ứng dụng ở
+   
+       http://localhost:5250
    
 📖 Hướng dẫn sử dụng
 
