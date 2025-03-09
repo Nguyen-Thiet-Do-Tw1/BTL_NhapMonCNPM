@@ -1,6 +1,7 @@
 📚 Phần mềm Quản lý Hệ thống Thư viện Trường Đại học Mở Hà Nội
 
 📝 Giới thiệu
+
 Dự án này phát triển một hệ thống quản lý thư viện cho Trường Đại học Mở Hà Nội, giúp tối ưu hóa việc quản lý tài liệu, mượn/trả sách, và thông tin độc giả.
 
 🎯 Tính năng chính
